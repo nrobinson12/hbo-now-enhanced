@@ -2,17 +2,18 @@
     "manifest_version": 2,
     "name": "HBO Now Enhanced",
     "description": "A light-weight extension that enhances HBO Now's streaming service to it's full potential.",
-    "version": "0.1",
+    "version": "0.2",
     "icons": {
-      "128": "icon.png"
+        "128": "icon.png"
+    },
+    "background": {
+        "scripts": ["background.js"]
     },
     "content_scripts": [
         {
-          "matches": [
-            "https://play.hbonow.com/episode/*",
-            "https://play.hbonow.com/feature/*"
-          ],
-          "js": ["jquery-3.4.0.min.js", "content.js"]
+            "matches": ["https://play.hbonow.com/*"],
+            "js": ["content.js"]
         }
-      ]
+    ],
+    "permissions": ["tabs"]
 }

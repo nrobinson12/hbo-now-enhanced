@@ -1,19 +1,24 @@
 # HBO Now Enhanced
-
 A light-weight chrome extension that fixes a few bugs in HBO Now's streaming service.
 
 ## Features
-
 - Changed prevelant grey bars to fully black when streaming
+- Right arrow skips forward 10 seconds on streams (left arrow skips backward)
 
-## Planned Fixes
+## Fixes
+- Clicking space bar to pause no longer scrolls down the page
 
+# Planned
+- Keep grey bars black when clicking on next episode popup (at end of current episode)
+- Add animation for skipping forward/backward
 - Fix media buttons not working at times
-- Stop site from scrolling to bottom when exitting fullscreen
-- Add back/forward media buttons (X seconds each in current stream)
-  - Able to use left/right arrow keys
+- Alter volume with up/down arrows
+- Stop site from scrolling to bottom when exiting fullscreen
 
 ### Maybe
+- Add (better) next episode button
+- Force/choose quality
+- have a featured/popular list on certain pages
 
-- Add next episode button
-- Force quality / choose quality
+# Disclaimer
+HBO and HBO Now are trademarks of Home Box Office, Inc.. This application and its developer are in no way affiliated with Home Box Office, Inc..
