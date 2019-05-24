@@ -1,5 +1,7 @@
 # HBO Now Enhanced
-A light-weight chrome extension that fixes a few bugs in HBO Now's streaming service. Here's the [Chrome Web Store Link!](https://chrome.google.com/webstore/detail/hbo-now-enhanced/kibhmcdemphikjllndhmdjfailnllbjo?hl=en-US)
+A light-weight chrome extension that fixes a few bugs in HBO Now's streaming service.
+
+Here's the [Chrome Web Store Link!](https://chrome.google.com/webstore/detail/hbo-now-enhanced/kibhmcdemphikjllndhmdjfailnllbjo?hl=en-US)
 
 ## Features
 - Changed prevelant grey bars to fully black when streaming
