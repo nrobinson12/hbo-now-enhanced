@@ -107,7 +107,7 @@ document.onkeydown = e => {
     if (dev) console.log('key', key);
     switch (key) {
         case 32: // space
-            if (videoElement) e.preventDefault();
+            if (getVideoElement()) e.preventDefault();
             break;
         case 37: // <-
             skip(-10);
