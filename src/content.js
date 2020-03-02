@@ -2,11 +2,11 @@
 
 /**
  * restrict a number to a certain boundary
- * 
+ *
  * @param {number} num number you want to restrict
  * @param {number} min lowest int num can be
  * @param {number} max highest int num can be
- * 
+ *
  * @return {number} num restricted on {min...max}
  */
 clamp = (num, min, max) => {
@@ -23,8 +23,11 @@ const mediaUrlRegex = RegExp('^https://play.hbonow.com/(feature|episode|extra)/.
 
 // elements
 let barElement   = null; // grey bars element
-let videoElement = null; // video element
 let mediaElement = null; // media toolbar element
+
+const getVideoElement = () => {
+    return document.querySelector('video.default');
+}
 
 // search
 let searching      = true;
@@ -52,7 +55,6 @@ resetSearch = () => {
     clearInterval(searchInterval);
     searching = true;
     barElement = null;
-    videoElement = null;
     mediaElement = null;
 }
 
@@ -77,15 +79,6 @@ restartSearchInterval = () => {
                 return el.style['backgroundColor'] === 'rgb(15, 15, 15)';
             });
             toggleBars(true);
-        }
-
-        // VIDEO ELEMENT
-        if (!videoElement) {
-            const videoElements = document.getElementsByTagName('video');
-            if (videoElements.length === 1) videoElement = videoElements[0];
-            else if (videoElements.length > 1) {
-                console.error('Error: More than one video element in current DOM.');
-            }
         }
 
         // MEDIA TOOLBAR ELEMENT
@@ -114,7 +107,7 @@ document.onkeydown = e => {
     if (dev) console.log('key', key);
     switch (key) {
         case 32: // space
-            if (videoElement) e.preventDefault();
+            if (getVideoElement()) e.preventDefault();
             break;
         case 37: // <-
             skip(-10);
@@ -140,6 +133,7 @@ document.onkeydown = e => {
 }
 
 skip = (amt) => {
+    const videoElement = getVideoElement();
     if (videoElement) {
         const newTime = videoElement.currentTime + amt;
         videoElement.currentTime = clamp(newTime, 0, videoElement.duration);
@@ -147,6 +141,7 @@ skip = (amt) => {
 }
 
 alterVolume = (e, amt) => {
+    const videoElement = getVideoElement();
     // changing this doesn't reflect what's displayed on screen!!
     if (videoElement) {
         e.preventDefault();
