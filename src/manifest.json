@@ -12,7 +12,8 @@
     "content_scripts": [
         {
             "matches": ["https://play.hbonow.com/*"],
-            "js": ["content.js"]
+            "js": ["content.js"],
+            "css": ["style.css"]
         }
     ],
     "permissions": ["tabs"]

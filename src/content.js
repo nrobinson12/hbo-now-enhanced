@@ -1,14 +1,6 @@
 // -------- utils -------- //
 
-/**
- * restrict a number to a certain boundary
- * 
- * @param {number} num number you want to restrict
- * @param {number} min lowest int num can be
- * @param {number} max highest int num can be
- * 
- * @return {number} num restricted on {min...max}
- */
+// restrict a number to a certain boundary
 clamp = (num, min, max) => {
     return Math.min(Math.max(num, min), max);
 }
@@ -21,10 +13,15 @@ const dev = false;
 // url with video/media in it
 const mediaUrlRegex = RegExp('^https://play.hbonow.com/(feature|episode|extra)/.+$');
 
+// assets
+const pauseIcon = 'assets/images/buttons/desktop/icn_player_pause.png';
+const back10 = 'assets/images/player_controls/desktop/btn_10back_default.png'; // icon for rewinding video
+const volHigh = 'assets/images/player_controls/desktop/btn_volume_2_default.png'; // icon for high volume
+const volLow = 'assets/images/player_controls/desktop/btn_volume_0_default.png'; // icon for low volume
+
 // elements
-let barElement   = null; // grey bars element
 let videoElement = null; // video element
-let mediaElement = null; // media toolbar element
+let videoParentElement = null; // dominating parent element that holds video and all related elements
 
 // search
 let searching      = true;
@@ -51,14 +48,12 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
 resetSearch = () => {
     clearInterval(searchInterval);
     searching = true;
-    barElement = null;
     videoElement = null;
-    mediaElement = null;
+    videoParentElement = null;
 }
 
 allElementsFound = () => {
-    const mediaFound = !dev || mediaElement;
-    return barElement && videoElement && mediaFound;
+    return videoElement && videoParentElement;
 }
 
 stopSearch = () => {
@@ -71,14 +66,6 @@ restartSearchInterval = () => {
     searchInterval = setInterval(() => {
         if (dev) console.log('searching...');
 
-        // GREY BARS ELEMENT
-        if (!barElement) {
-            barElement = [...document.getElementsByClassName('default')].find(el => {
-                return el.style['backgroundColor'] === 'rgb(15, 15, 15)';
-            });
-            toggleBars(true);
-        }
-
         // VIDEO ELEMENT
         if (!videoElement) {
             const videoElements = document.getElementsByTagName('video');
@@ -88,18 +75,18 @@ restartSearchInterval = () => {
             }
         }
 
-        // MEDIA TOOLBAR ELEMENT
-        if (dev && !mediaElement) {
-            mediaElement = [...document.getElementsByClassName('default')].find(el => {
-                return el.style['backgroundColor'] === 'rgba(15, 15, 15, 0.76)'; // theres more than 1 with this bc
+        // VIDEO PARENT ELEMENT
+        if (!videoParentElement) {
+            videoParentElement = [...document.getElementsByClassName('default')].find(el => {
+                return el.style['backgroundColor'] === 'rgb(0, 0, 0)' && el.style['userSelect'] === 'none';
             });
+            addFadeIcons()
         }
 
         if (allElementsFound()) {
             if (dev) {
-                console.log('barElement', barElement);
                 console.log('videoElement', videoElement);
-                console.log('mediaElement', mediaElement);
+                console.log('videoParentElement', videoParentElement);
             }
             stopSearch();
         }
@@ -111,7 +98,9 @@ restartSearchInterval = () => {
 
 document.onkeydown = e => {
     const key = e.keyCode;
+
     if (dev) console.log('key', key);
+
     switch (key) {
         case 32: // space
             if (videoElement) e.preventDefault();
@@ -127,12 +116,6 @@ document.onkeydown = e => {
             break;
         case 40: // down
             if (dev) alterVolume(e, -0.1);
-            break;
-        case 77: // m
-            if (dev) toggleBars();
-            break;
-        case 78: // n
-            if (dev) toggleMedia();
             break;
         default:
             break;
@@ -155,21 +138,32 @@ alterVolume = (e, amt) => {
     }
 }
 
-toggleBars = (forceBlack) => {
-    if (barElement) {
-        if (forceBlack || barElement.style['backgroundColor'] === 'rgb(15, 15, 15)') {
-            barElement.style['backgroundColor'] = 'rgb(0, 0, 0)';
-        } else {
-            barElement.style['backgroundColor'] = 'rgb(15, 15, 15)';
-        }
-    }
-}
+addFadeIcons = () => {
+    if (videoParentElement && dev) {
 
-toggleMedia = () => {
-    if (mediaElement && mediaElement.parentElement) {
-        const curDisplay = mediaElement.parentElement.style['display'];
-        if (curDisplay === 'none') mediaElement.parentElement.style['display'] = '';
-        else mediaElement.parentElement.style['display'] = 'none';
+        // find already existing icon
+        var pauseElement = [...videoParentElement.getElementsByClassName("default")].find(el => {
+            return el.style['backgroundImage'] === 'url("' + pauseIcon + '")';
+        })
+        if (!pauseElement) return;
+
+        var parentWithDims = pauseElement?.parentElement?.parentElement?.parentElement;
+        if (!parentWithDims) return;
+
+        var left = parentWithDims.style.left;
+        var top = parentWithDims.style.top;
+        var height = parentWithDims.style.height;
+        var width = parentWithDims.style.width;
+
+        var iconDiv = document.createElement("div");
+        iconDiv.classList.add("iconInjected");
+
+        iconDiv.style.left = left;
+        iconDiv.style.top = top;
+        iconDiv.style.height = height;
+        iconDiv.style.width = width;
+
+        videoParentElement.appendChild(iconDiv);
     }
 }
 
