@@ -1,6 +1,6 @@
 # HBO Now Enhanced
 
-A light-weight chrome extension that fixes a few bugs in HBO Now's streaming service.
+A light-weight chrome extension that fixes a few bugs in the HBO Now and HBO Go streaming services.
 
 Here's the [Chrome Web Store Link!](https://chrome.google.com/webstore/detail/hbo-now-enhanced/kibhmcdemphikjllndhmdjfailnllbjo?hl=en-US)
 
@@ -27,7 +27,7 @@ Here's the [Chrome Web Store Link!](https://chrome.google.com/webstore/detail/hb
 
 ## Disclaimer
 
-HBO and HBO Now are trademarks of Home Box Office, Inc.. This application and its developer are in no way affiliated with Home Box Office, Inc..
+HBO, HBO Now, and HBO Go are trademarks of Home Box Office, Inc.. This application and its developer are in no way affiliated with Home Box Office, Inc..
 
 ## License
 

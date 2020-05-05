@@ -11,7 +11,7 @@ clamp = (num, min, max) => {
 const dev = false;
 
 // url with video/media in it
-const mediaUrlRegex = RegExp('^https://play.hbonow.com/(feature|episode|extra)/.+$');
+const mediaUrlRegex = RegExp('^https://play.hbo(now|go).com/(feature|episode|extra)/.+$');
 
 // assets
 const pauseIcon = 'assets/images/buttons/desktop/icn_player_pause.png';

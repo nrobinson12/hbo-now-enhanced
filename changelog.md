@@ -2,6 +2,10 @@
 
 All changes to this project will be documented in this file.
 
+## 0.4 - 2020-05-05
+
+- Added support for HBO Go
+
 ## 0.3 - 2020-05-01
 
 - HBO has fixed the grey bars issue, so this extension no longer needs to fix that
